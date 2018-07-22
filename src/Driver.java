@@ -65,6 +65,50 @@ public class Driver {
 		return "";
 	}
 	
+	public static Vector pickVector(ArrayList<Vector> listV){
+		int opt = -1;
+		Scanner sc = new Scanner(System.in);
+		while (opt > listV.size() || opt < 0){
+			System.out.println("\n");
+			for(int i = 1; i < listV.size(); i++)
+				System.out.println(i + " - " + listV.get(i - 1).toString() + "\n");
+			System.out.print("0 - New Vector\nOption: ");
+			opt = sc.nextInt();
+		}
+		
+		if(opt != 0 )
+			return listV.get(opt - 1);
+		return newVector();	
+	}
+	public static Vector newVector(){
+		int opt = -1;
+		Scanner sc = new Scanner(System.in);
+		System.out.print("\n\nThe dimention of the vector (1 - 3): ");
+		do{
+			opt = sc.nextInt();
+			if(opt > 3 || opt < 1)
+				System.out.println("Error: Please enter a number from 1 - 3");
+		}while(opt != 1 && opt != 2 && opt != 3);
+		System.out.println("\n\nPlease enter the coordinates");
+		
+		Vector v = new Vector();
+		System.out.print("X: ");
+		v.setX(sc.nextInt());
+	
+		if(opt == 1){
+			System.out.print("X2: ");
+			v.setX2(sc.nextInt());
+		} else if (opt != 1){
+			System.out.print("Y: ");
+			v.setX(sc.nextInt());
+		
+			if (opt == 3){
+				System.out.print("Z: ");
+				v.setX(sc.nextInt());
+		    }
+	    }
+		return v;
+	}
 	public static void main(String[] args) {
 		ArrayList<Vector> vectors = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
@@ -77,7 +121,9 @@ public class Driver {
 			System.out.print("\n\n1 - Vector Addition\n" 			+	 
 							   "2 - Vector Scaling\n"    			+ 
 							   "3 - Gauss Jordan Elimination\n"     + 
-							   "4 - Load Vector\n"     + 
+							   "4 - Add Vector/s\n"    			    + 
+							   "5 - Load Vector/s\n"			    + 
+							   "6 - Delete All Vector/s\n"	 	    + 
 							   "0 - Exit\n"    		   				+ 
 							   "\nOption: ");
 			opt = sc.nextInt();
@@ -89,7 +135,9 @@ public class Driver {
 						break;
 				case 3: //GaussJordanElimination (with display vector)
 						break;
-				case 4: System.out.print("\nFile name: ");
+				case 4: newVector();
+						break;
+				case 5: System.out.print("\nFile name: ");
 						loadVectors(vectors, sc.nextLine());
 						break;
 				case 0: break;

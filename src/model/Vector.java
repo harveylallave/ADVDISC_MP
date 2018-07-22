@@ -3,11 +3,17 @@ package model;
 public class Vector {
 
 	private int x,
+				x2,
 				y,
 				z;
 
 	public Vector(){
 		super();
+
+		x = (Integer) null;
+		x2 = (Integer) null;
+		y = (Integer) null;
+		z = (Integer) null;
 	}
 	
 	public Vector(int x, int y, int z) {
@@ -28,13 +34,21 @@ public class Vector {
 		// TODO: vector addition
 		
 	};
-	
+
 	public int getX() {
 		return x;
 	}
 
 	public void setX(int x) {
 		this.x = x;
+	}
+	
+	public int getX2() {
+		return x2;
+	}
+
+	public void setX2(int x) {
+		this.x2 = x;
 	}
 
 	public int getY() {
