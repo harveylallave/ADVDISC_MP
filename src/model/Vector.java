@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Vector {
 	
 	private double data[];
@@ -37,6 +39,12 @@ public class Vector {
 		}
 		return this;
 	};
+	
+	public Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants) {
+		Vector result = new Vector(dimension);
+		
+		return result;
+	}
 
 	public double[] getData() {
 		return data;
