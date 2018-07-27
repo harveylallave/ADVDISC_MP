@@ -13,7 +13,7 @@ import model.Vector;
 
 public class Driver {
 
-	
+	/*
 	public static void loadVectors(ArrayList<Vector> vectors, String fileName){
 
 
@@ -55,6 +55,7 @@ public class Driver {
 	        // ex.printStackTrace();
       }
    }
+	*/
 	
 	
 	public void displayVector(Vector v){
@@ -87,27 +88,15 @@ public class Driver {
 		System.out.print("\n\nThe dimention of the vector (1 - 3): ");
 		do{
 			opt = sc.nextInt();
-			if(opt > 3 || opt < 1)
-				System.out.println("Error: Please enter a number from 1 - 3");
-		}while(opt != 1 && opt != 2 && opt != 3);
+			if(opt<=0)
+				System.out.println("Error: Please input a valid number. ");
+		}while(opt<=0);
 		System.out.println("\n\nPlease enter the coordinates");
 		
 		Vector v = new Vector();
 		System.out.print("X: ");
-		v.setX(sc.nextInt());
-	
-		if(opt == 1){
-			System.out.print("X2: ");
-			v.setX2(sc.nextInt());
-		} else if (opt != 1){
-			System.out.print("Y: ");
-			v.setX(sc.nextInt());
+
 		
-			if (opt == 3){
-				System.out.print("Z: ");
-				v.setX(sc.nextInt());
-		    }
-	    }
 		listV.add(v);
 		return v;
 	}
@@ -139,7 +128,7 @@ public class Driver {
 							System.out.println("Error: Vectors of different dimension cannot be added.");
 						else {
 							System.out.print(v.toString() + " + " + v2.toString() + "\n = ");
-							v.addition(v2);
+							v.add(v2);
 							System.out.println(v.toString());
 						}
 						break;
@@ -154,7 +143,7 @@ public class Driver {
 				case 4: newVector(listV);
 						break;
 				case 5: System.out.print("\nFile name: ");
-						loadVectors(listV, sc.nextLine());
+				//		loadVectors(listV, sc.nextLine());
 						break;
 				case 6: listV = new ArrayList<Vector>();
 				case 0: break;

@@ -53,6 +53,11 @@ public class Vector {
 	public void setData(double[] data) {
 		this.data = data;
 	}
+
+	public int getDimension() {
+		return dimension;
+	}
+	
 	
 	
 }
