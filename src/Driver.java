@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import model.Vector;
@@ -67,7 +68,7 @@ public class Driver {
 		return "";
 	}
 	
-	public static Vector pickVector(ArrayList<Vector> listV){
+	public static Vector pickVector(List<Vector> listV){
 		int opt = -1;
 		Scanner sc = new Scanner(System.in);
 		while (opt > listV.size() || opt < 0){
@@ -82,7 +83,7 @@ public class Driver {
 			return listV.get(opt - 1);
 		return newVector(listV);	
 	}
-	public static Vector newVector(ArrayList<Vector> listV){
+	public static Vector newVector(List<Vector> listV){
 		int opt = -1;
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\n\nThe dimention of the vector (1 - 3): ");
@@ -101,7 +102,7 @@ public class Driver {
 		return v;
 	}
 	public static void main(String[] args) {
-		ArrayList<Vector> listV = new ArrayList<>();
+		List<Vector> listV = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
 		Vector v, v2;
 		
@@ -139,6 +140,31 @@ public class Driver {
 						System.out.println("New value: " + v.toString());
 						break;
 				case 3: //GaussJordanElimination (with display vector)
+						double[] d = {1, 2, 3};
+						listV.add(new Vector(d, 3));
+
+						listV.add(new Vector(d, 3));
+
+						d[0] = 3;
+						d[1] = 0;
+						d[2] = -1;
+						listV.add(new Vector(d, 3));
+
+						d[0] = 9;
+						d[1] = 8;
+						d[2] = 3;
+						v = new Vector(d, 3);
+
+//							System.out.println("\nSpan: " + Vector.span(listV, 3));
+						
+							v = Vector.Gauss_Jordan(listV, 3, v);
+							System.out.println();
+							if(v != null){
+								System.out.print("Values: ");
+								for(double val : v.getData()){
+									System.out.print(val + " ");
+								}
+							} else System.out.println("No Solution");
 						break;
 				case 4: newVector(listV);
 						break;
@@ -151,5 +177,7 @@ public class Driver {
 			}
 		}
 	}
+	
+//	https://www8.9anime.is/watch/seraph-of-the-end-seraph-of-the-endless.xv43/k999n6
 
 }
