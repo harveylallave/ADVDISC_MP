@@ -77,7 +77,6 @@ public class Vector {
 			vectors.add(new Vector(dimension));
 		
 		// Sort vectors based on the position of the first non zero element
-		
 		for(int i = 0; i < vectors.size(); i++){
 			for(int j = 0; j < dimension && firstNonZeroIndex[i] == Integer.MAX_VALUE; j++)
 				if(vectors.get(i).getSpecificData(j) != 0)
@@ -110,11 +109,8 @@ public class Vector {
 				temp = vectors.get(i).getSpecificData(j);
 				if(temp != 0)
 					if(i == j){ // Make current value of index [i][j] == 1
-	//						What if matrix[i][j] == 0
-	//					if(temp != 0){
 							vectors.get(i).scale(1/temp);
 							constantsArr[i] /= temp;
-	//					}
 					}
 					else if(j < i){	// Make current value == 0
 						constantsArr[i] += constantsArr[j] * -1 * temp;

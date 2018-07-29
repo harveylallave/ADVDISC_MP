@@ -14,50 +14,6 @@ import model.Vector;
 
 public class Driver {
 
-	/*
-	public static void loadVectors(ArrayList<Vector> vectors, String fileName){
-
-
-	    // This will reference one line at a time
-	    String line = null;
-
-	    try {
-	        // FileReader reads text files in the default encoding.
-	        FileReader fileReader = 
-	            new FileReader("src\\" + (fileName.contains(".txt.") ? fileName : fileName +".txt"));
-
-	        // Always wrap FileReader in BufferedReader.
-	        BufferedReader bufferedReader = 
-	            new BufferedReader(fileReader);
-
-	        while((line = bufferedReader.readLine()) != null) {
-        		Vector v = new Vector();
-        		String[] dimensionXYZ = line.split(" ");
-        		int dimension = Integer.parseInt(dimensionXYZ[0]);
-	        	for(int i = 1; i < dimensionXYZ.length; i++){
-	        		v.setCoordinates(i, Integer.parseInt(dimensionXYZ[i]), dimension);
-	        	}
-	        	vectors.add(v);
-	        }   
-
-	        // Always close files.
-	        bufferedReader.close();         
-	    }
-	    catch(FileNotFoundException ex) {
-	        System.out.println(
-	            "Error: File '" + 
-	            fileName + "' not found");                
-	    }
-	    catch(IOException ex) {
-	        System.out.println(
-	            "Error: File '" 
-	            + fileName + "' is unreadable");                  
-	        // Or we could just do this: 
-	        // ex.printStackTrace();
-      }
-   }
-	*/
-	
 	
 	public void displayVector(Vector v){
 		System.out.println("Display vetor span");
@@ -177,7 +133,4 @@ public class Driver {
 			}
 		}
 	}
-	
-//	https://www8.9anime.is/watch/seraph-of-the-end-seraph-of-the-endless.xv43/k999n6
-
 }
