@@ -96,22 +96,27 @@ public class Driver {
 						System.out.println("New value: " + v.toString());
 						break;
 				case 3: //GaussJordanElimination (with display vector)
-						double[] d = {1, 2, 3};
+						double[] d = {1, 1, -3};
 						listV.add(new Vector(d, 3));
-
+						d[0] = 2;
+						d[1] = 1;
+						d[2] = -1;
+						//d[3] = 1;
 						listV.add(new Vector(d, 3));
 
 						d[0] = 3;
-						d[1] = 0;
-						d[2] = -1;
+						d[1] = 2;	
+						d[2] = -4;
+						//d[3] = -2;
 						listV.add(new Vector(d, 3));
 
-						d[0] = 9;
-						d[1] = 8;
-						d[2] = 3;
+						d[0] = 4;
+						d[1] = 2;
+						d[2] = 7;
+						//d[3] = 0;
 						v = new Vector(d, 3);
 
-//							System.out.println("\nSpan: " + Vector.span(listV, 3));
+							//System.out.println("\nSpan: " + Vector.span(listV, 3));
 						
 							v = Vector.Gauss_Jordan(listV, 3, v);
 							System.out.println();
@@ -121,7 +126,7 @@ public class Driver {
 									System.out.print(val + " ");
 								}
 							} else System.out.println("No Solution");
-						break;
+						break; 
 				case 4: newVector(listV);
 						break;
 				case 5: System.out.print("\nFile name: ");

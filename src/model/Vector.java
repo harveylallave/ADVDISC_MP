@@ -35,11 +35,14 @@ public class Vector {
 	}
 
 	public Vector scale(double num){
-
+		
 		for(int i = 0; i < dimension; i++) {
 			data[i] = data[i] * num;
 		}
-		return this;
+
+		Vector result = new Vector(dimension);
+		result.setData(data);
+		return result;
 	};
 	
 	/*
@@ -53,7 +56,9 @@ public class Vector {
 			for(int i = 0; i < dimension; i++) {
 				data[i] += data2[i];
 			}
-			return this;
+			Vector result = new Vector(dimension);
+			result.setData(data);
+			return result;
 		}
 		return null;
 	};
@@ -70,7 +75,7 @@ public class Vector {
 			firstNonZeroIndex[i] = Integer.MAX_VALUE;
 		}
 		
-		displayAugmentedMatrix(vectors, dimension, constantsArr);
+		//displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		// Add zero vector and 0 constant if the size is not the same
 		while(vectors.size() < dimension)
@@ -100,7 +105,7 @@ public class Vector {
 		
 			
 
-		displayAugmentedMatrix(vectors, dimension, constantsArr);
+	//	displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		boolean valid = validRowGaussJordan(vectors.get(0), constantsArr[0]);
 		// Row Echelon Form (Lower/left half)
@@ -121,7 +126,7 @@ public class Vector {
 			}
 	
 
-		displayAugmentedMatrix(vectors, dimension, constantsArr);
+	//	displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		// Reduced row echelon form (Upper/Right half)
 		for(int i = vectors.size() - 1; i >= 0  && valid; i--)
@@ -135,7 +140,7 @@ public class Vector {
 				valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
 			}
 
-		displayAugmentedMatrix(vectors, dimension, constantsArr);
+		//displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		if(valid){
 			result = new Vector(dimension);
@@ -145,7 +150,7 @@ public class Vector {
 				
 			result.setData(constantsArr);
 		}
-		System.out.println(valid);
+		//System.out.println(valid);
 		return result;
 	}
 
@@ -172,7 +177,7 @@ public class Vector {
 
 
 	public static int span(List<Vector> vectors, int dimension){
-		System.out.println();
+		//System.out.println();
 		Gauss_Jordan(vectors, dimension, new Vector(dimension));
 		int nZeroRows = 0;
 		boolean next;
