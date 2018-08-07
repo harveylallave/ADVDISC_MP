@@ -180,7 +180,7 @@ public class Vector {
 		//System.out.println();
 		Gauss_Jordan(vectors, dimension, new Vector(dimension));
 		int nZeroRows = 0;
-		boolean next;
+		boolean next; 
 		for(int i = 0; i < vectors.size(); i++){
 			next = false;
 			for(int j = 0; j < dimension && !next; j++)
@@ -208,5 +208,9 @@ public class Vector {
 
 	public int getDimension() {
 		return dimension;
+	}
+	
+	public void setSpecificData(int index, double data) {
+		this.data[index] = data;
 	}
 }
