@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -180,13 +181,18 @@ public class Vector {
 		//System.out.println();
 		Gauss_Jordan(vectors, dimension, new Vector(dimension));
 		int nZeroRows = 0;
+		List<double[]> nonZeroRows = new ArrayList<double[]>();
+		
+		
 		boolean next; 
 		for(int i = 0; i < vectors.size(); i++){
 			next = false;
 			for(int j = 0; j < dimension && !next; j++)
-				if(vectors.get(i).getSpecificData(j) != 0){
+				if(vectors.get(i).getSpecificData(j) != 0 && 
+				   !nonZeroRows.contains(vectors.get(i).getData())){
 					next = true;
 					nZeroRows += 1;
+					nonZeroRows.add(vectors.get(i).getData());
 				}
 		}
 		return nZeroRows;
