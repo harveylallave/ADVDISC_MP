@@ -144,6 +144,7 @@ public class Vector {
 		//displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		if(valid){
+			
 			result = new Vector(dimension);
 			// TODO How to initialize result vector with the case of infinite number of solutions
 //			for(int i = 0; i < dimension; i++)
@@ -155,16 +156,17 @@ public class Vector {
 		return result;
 	}
 	
-	public static Vector Gauss_Jordan (List<Vector> vectors, int dimension, List<Vector> constants) {
-		Vector result = null;
+	public static List<Vector> Gauss_Jordan (List<Vector> vectors, int dimension, List<Vector> constants) {
+		List<Vector> result = null;
 		
-		double[] constantsArr = new double[dimension];
+		List<Vector> constantsArr = constants;
+		//double[] constantsArr = new double[dimension];
 		int[] firstNonZeroIndex = new int[dimension];
 		double temp = 0;
-		for(int j = 0; j < constants.size(); j++) { 
-			for(int i = 0; i < dimension; i++){
-				constantsArr[i] = (i < constants.get(j).dimension ? constants.get(j).data[i] : 0);
-				firstNonZeroIndex[i] = Integer.MAX_VALUE;
+		for(int i = 0; i < constants.size(); i++) { 
+			for(int j = 0; j < dimension; j++){
+				constantsArr.get(i).data[j] = (j < constants.get(i).dimension ? constants.get(i).data[j] : 0);
+				firstNonZeroIndex[j] = Integer.MAX_VALUE;
 			}
 		}
 		
@@ -180,27 +182,30 @@ public class Vector {
 				if(vectors.get(i).getSpecificData(j) != 0)
 					firstNonZeroIndex[i] = j;
 		}
-		for(int i = 1; i < dimension; i++)
-			if(firstNonZeroIndex[i - 1] > firstNonZeroIndex[i]){
-				int tempIndex = firstNonZeroIndex[i];
-				firstNonZeroIndex[i] = firstNonZeroIndex[i - 1];
-				firstNonZeroIndex[i - 1] = tempIndex;
-				
-				Vector tempVector = vectors.get(i);
-				vectors.remove(i);
-				vectors.add(i - 1, tempVector);
-				
-				temp = constantsArr[i];
-				constantsArr[i] = constantsArr[i - 1];
-				constantsArr[i - 1] = temp;
-				i = 0;
-			}
+		for(int i = 0; i < constantsArr.size(); i++) {
+			for(int j = 1; j < dimension; j++)
+				if(firstNonZeroIndex[j - 1] > firstNonZeroIndex[j]){
+					int tempIndex = firstNonZeroIndex[j];
+					firstNonZeroIndex[j] = firstNonZeroIndex[j - 1];
+					firstNonZeroIndex[j - 1] = tempIndex;
+					
+					Vector tempVector = vectors.get(j);
+					vectors.remove(j);
+					vectors.add(j - 1, tempVector);
+					
+					temp = constantsArr.get(i).data[j];
+					constantsArr.get(i).data[j] = constantsArr.get(i).data[j - 1];
+					constantsArr.get(i).data[j - 1] = temp;
+					j = 0;
+				}
+		}
 		
 			
 
 	//	displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
-		boolean valid = validRowGaussJordan(vectors.get(0), constantsArr[0]);
+		boolean valid = validRowGaussJordan(vectors.get(0), constantsArr.get(0).data[0]);
+		
 		// Row Echelon Form (Lower/left half)
 		for(int i = 0; i < vectors.size() && valid; i++)
 			for(int j = 0; j <= i && valid; j++){
@@ -208,14 +213,23 @@ public class Vector {
 				if(temp != 0)
 					if(i == j){ // Make current value of index [i][j] == 1
 							vectors.get(i).scale(1/temp);
-							constantsArr[i] /= temp;
+							for(int x = 0; x < constants.get(i).dimension; x++)
+								constantsArr.get(i).data[x] /= temp;
 					}
 					else if(j < i){	// Make current value == 0
-						constantsArr[i] += constantsArr[j] * -1 * temp;
+						for(int x = 0; x< constants.get(0).dimension; x++)
+							constantsArr.get(i).data[x] += constantsArr.get(j).data[x] * -1 * temp;
 						vectors.get(i).add(vectors.get(j).scale(-1*temp));	
 						vectors.get(j).scale(-1/temp);
 					}
-				valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
+				
+				for(int x = 0; x< constantsArr.get(i).dimension; x++) {
+					valid = validRowGaussJordan(vectors.get(i), constantsArr.get(i).data[x]);
+					if(valid==false) {
+						valid = false;
+						break;
+					}
+				}
 			}
 	
 
@@ -226,22 +240,30 @@ public class Vector {
 			for(int j = dimension - 1; j > i && valid; j--){
 				temp = vectors.get(i).getSpecificData(j);
 				if(temp != 0 && j > i){	// Make current value == 0
-					constantsArr[i] += constantsArr[j] * -1 * temp;
+					for(int x = 0; x< constantsArr.get(i).dimension; x++) {
+						constantsArr.get(i).data[x] += constantsArr.get(j).data[x] * -1 * temp;
+					}
 					vectors.get(i).add(vectors.get(j).scale(-1 * temp));
 					vectors.get(j).scale(-1/temp);
 				}
-				valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
+				for(int x = 0; x< constantsArr.get(i).dimension; x++) {
+					valid = validRowGaussJordan(vectors.get(i), constantsArr.get(i).data[x]);
+					if(valid==false) {
+						valid = false;
+						break;
+					}
+				}
 			}
 
 		//displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		if(valid){
-			result = new Vector(dimension);
+			result = new ArrayList<Vector>();
 			// TODO How to initialize result vector with the case of infinite number of solutions
 //			for(int i = 0; i < dimension; i++)
 //				vectors.get(i), constantsArr[i], i);
-				
-			result.setData(constantsArr);
+			for(int i = 0; i < constantsArr.size(); i++)
+				result.add(constantsArr.get(i));
 		}
 		//System.out.println(valid);
 		return result;
