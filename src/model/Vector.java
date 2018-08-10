@@ -182,23 +182,25 @@ public class Vector {
 				if(vectors.get(i).getSpecificData(j) != 0)
 					firstNonZeroIndex[i] = j;
 		}
-		for(int i = 0; i < constantsArr.size(); i++) {
-			for(int j = 1; j < dimension; j++)
-				if(firstNonZeroIndex[j - 1] > firstNonZeroIndex[j]){
-					int tempIndex = firstNonZeroIndex[j];
-					firstNonZeroIndex[j] = firstNonZeroIndex[j - 1];
-					firstNonZeroIndex[j - 1] = tempIndex;
-					
-					Vector tempVector = vectors.get(j);
-					vectors.remove(j);
-					vectors.add(j - 1, tempVector);
-					
-					temp = constantsArr.get(i).data[j];
-					constantsArr.get(i).data[j] = constantsArr.get(i).data[j - 1];
-					constantsArr.get(i).data[j - 1] = temp;
-					j = 0;
-				}
-		}
+
+		for(int i = 1; i < dimension; i++)
+			if(firstNonZeroIndex[i - 1] > firstNonZeroIndex[i]){
+				int tempIndex = firstNonZeroIndex[i];
+				firstNonZeroIndex[i] = firstNonZeroIndex[i - 1];
+				firstNonZeroIndex[i - 1] = tempIndex;
+				
+				Vector tempVector = vectors.get(i);
+				vectors.remove(i);
+				vectors.add(i - 1, tempVector);
+				
+				Vector temp2;
+				
+				temp2 = constantsArr.get(i);
+				constantsArr.set(i, constantsArr.get(i-1));
+				constantsArr.set(i,temp2);
+				i = 0;
+			}
+		
 		
 			
 
@@ -213,12 +215,10 @@ public class Vector {
 				if(temp != 0)
 					if(i == j){ // Make current value of index [i][j] == 1
 							vectors.get(i).scale(1/temp);
-							for(int x = 0; x < constants.get(i).dimension; x++)
-								constantsArr.get(i).data[x] /= temp;
+							constantsArr.get(i).scale(1/temp);
 					}
 					else if(j < i){	// Make current value == 0
-						for(int x = 0; x< constants.get(0).dimension; x++)
-							constantsArr.get(i).data[x] += constantsArr.get(j).data[x] * -1 * temp;
+						constantsArr.get(i).add(constantsArr.get(j).scale(-1*temp));
 						vectors.get(i).add(vectors.get(j).scale(-1*temp));	
 						vectors.get(j).scale(-1/temp);
 					}
@@ -240,9 +240,7 @@ public class Vector {
 			for(int j = dimension - 1; j > i && valid; j--){
 				temp = vectors.get(i).getSpecificData(j);
 				if(temp != 0 && j > i){	// Make current value == 0
-					for(int x = 0; x< constantsArr.get(i).dimension; x++) {
-						constantsArr.get(i).data[x] += constantsArr.get(j).data[x] * -1 * temp;
-					}
+					constantsArr.get(i).add(constantsArr.get(j).scale(-1 * temp));
 					vectors.get(i).add(vectors.get(j).scale(-1 * temp));
 					vectors.get(j).scale(-1/temp);
 				}

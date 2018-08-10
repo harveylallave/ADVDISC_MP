@@ -66,17 +66,23 @@ public class Driver {
 		
 		while (opt != 0){
 			
-			System.out.print("\n\n1 - Vector Addition\n" 			+	 
+			System.out.print("\n\n0 - Matrix Inverse"				+
+							   "1 - Vector Addition\n" 			    +	 
 							   "2 - Vector Scaling\n"    			+ 
 							   "3 - Gauss Jordan Elimination\n"     + 
 							   "4 - Add Vector/s\n"    			    + 
 							   "5 - Load Vector/s\n"			    + 
 							   "6 - Delete All Vector/s\n"	 	    + 
-							   "0 - Exit\n"    		   				+ 
+							   "7 - Exit\n"    		   				+ 
 							   "\nOption: ");
 			opt = sc.nextInt();
 			sc.nextLine();
 			switch(opt){
+				case 0: 
+				
+				
+				
+					break;
 				case 1: //VectorAddition
 						// TODO: Multiple vector addition?
 						v = pickVector(listV);
@@ -133,7 +139,7 @@ public class Driver {
 				//		loadVectors(listV, sc.nextLine());
 						break;
 				case 6: listV = new ArrayList<Vector>();
-				case 0: break;
+				case 7: break;
 				default: System.out.println("\nError: Invalid input.\n\n");
 			}
 		}

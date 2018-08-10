@@ -53,6 +53,17 @@ public class Matrix {
 		return result;
 	}
 	
+	public Matrix inverse() {
+		Matrix identityMatrix = new Matrix(vectors.get(0).getDimension());
+		
+		List<Vector> result = Vector.Gauss_Jordan(this.vectors, this.vectors.get(0).getDimension(), identityMatrix.getVectors());
+
+		Matrix matrix = new Matrix(result, result.get(0).getDimension());
+		
+		
+		return matrix;
+	}
+	
 	public List<Vector> getVectors() {
 		return vectors;
 	}
