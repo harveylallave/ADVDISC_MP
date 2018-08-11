@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Matrix;
 import model.Vector;
 
 public class Driver {
@@ -78,9 +79,22 @@ public class Driver {
 			opt = sc.nextInt();
 			sc.nextLine();
 			switch(opt){
-				case 0: 
-				
-				
+				case 0:
+					List<Vector> list = new ArrayList<Vector>();
+					double arr[] = {4,7};
+					Vector v1 = new Vector(arr,2);
+					list.add(v1);
+					arr[0] = 2;
+					arr[1] = 6;
+					v1 = new Vector(arr,2);
+					list.add(v1);
+					Matrix matrix = new Matrix(list,2);
+					Vector ve = matrix.inverse().getVectors().get(0);
+					System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));
+					ve = matrix.inverse().getVectors().get(1);
+					System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));
+					
+					
 				
 					break;
 				case 1: //VectorAddition
