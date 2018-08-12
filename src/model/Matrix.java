@@ -67,14 +67,12 @@ public class Matrix {
 	}
 	
 	public Matrix inverse() {
-		Matrix identityMatrix = new Matrix(vectors.get(0).getDimension());
 		
-		List<Vector> result = Vector.Gauss_Jordan(this.vectors, this.vectors.get(0).getDimension(), identityMatrix.getVectors());
-
-		Matrix matrix = new Matrix(result, result.get(0).getDimension());
+		if(false) 			// Check if invertible
+			return null;
 		
-		
-		return matrix;
+		return new Matrix(Vector.Gauss_Jordan(vectors, dimension, new Matrix(dimension).vectors),
+						  dimension);
 	}
 	
 	public double determinant(){

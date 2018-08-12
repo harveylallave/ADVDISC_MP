@@ -70,8 +70,8 @@ public class Driver {
 			
 			System.out.print("\n\n" + 
 							   "-2 - Matrix Determinant\n" 		    +	
-							   "-1 - Matrix Multiplication\n" 		    +	
-							   "0 - Matrix Inverse"					+ 
+							   "-1 - Matrix Multiplication\n" 	    +	
+							   "0 - Matrix Inverse\n"				+ 
 							   "1 - Vector Addition\n" 			    +	 
 							   "2 - Vector Scaling\n"    			+ 
 							   "3 - Gauss Jordan Elimination\n"     + 
@@ -131,20 +131,22 @@ public class Driver {
 							System.out.println("Size mismatched");
 						else m.displayMatrix();
 						break;
-				case 0:
-						List<Vector> list = new ArrayList<Vector>();
+				case 0: // Matrix Inverse
 						d = new double[]{4, 7};
-						Vector v1 = new Vector(d,2);
-						list.add(v1);
+						v = new Vector(d,2);
+						listV.add(v);
 						
 						d = new double[]{2, 6};
-						v1 = new Vector(d,2);
-						list.add(v1);
-						Matrix matrix = new Matrix(list,2);
-						Vector ve = matrix.inverse().getVectors().get(0);
-						System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));
-						ve = matrix.inverse().getVectors().get(1);
-						System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));				
+						v = new Vector(d,2);
+						listV.add(v);
+						Matrix matrix = new Matrix(listV,2);
+						System.out.println("\nINVERSE OF THE MATRIX ");
+						matrix.displayMatrix();
+						System.out.println("IS");
+						matrix = matrix.inverse();
+						if(matrix == null)
+							System.out.println("Matrix is not invertible");
+						else matrix.displayMatrix();
 						break;
 				case 1: //VectorAddition
 						// TODO: Multiple vector addition?
