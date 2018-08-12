@@ -63,12 +63,14 @@ public class Driver {
 		Scanner sc = new Scanner(System.in);
 		Vector v, v2;
 		
-		int opt = -2;
+		int opt = -3;
+		double[] d;
 		
 		while (opt != 7){
 			
 			System.out.print("\n\n" + 
-							   "-1 - Matrix determinant\n" 		    +	
+							   "-2 - Matrix Determinant\n" 		    +	
+							   "-1 - Matrix Multiplication\n" 		    +	
 							   "0 - Matrix Inverse"					+ 
 							   "1 - Vector Addition\n" 			    +	 
 							   "2 - Vector Scaling\n"    			+ 
@@ -81,24 +83,62 @@ public class Driver {
 			opt = sc.nextInt();
 			sc.nextLine();
 			switch(opt){
-				case -1: // Matrix Determinant
-						double d2[] = {1, 2};
-						v = new Vector(d2,2);
+				case -2: // Matrix Determinant
+						d = new double[]{1, 2};
+						v = new Vector(d,2);
 						listV.add(v);
-						d2[0] = 3;
-						d2[1] = 4;
-						v = new Vector(d2,2);
+						
+						d = new double[]{3, 4};
+						v = new Vector(d,2);
 						listV.add(v);
 						System.out.println("Determinant: " + new Matrix(listV,2).determinant());
 						break;
+
+				case -1: // Matrix Multiplication
+						d = new double[]{2, 1, 4};
+						v = new Vector(d, 3);
+						listV.add(v);
+						
+						d = new double[]{0, 1, 1};
+						v = new Vector(d, 3);
+						listV.add(v);
+						
+						List<Vector> listV2 = new ArrayList<>();
+						
+						d = new double[]{6, 3, -1, 0};
+						v = new Vector(d, 4);
+						listV2.add(v);
+
+						d = new double[]{1, 1, 0, 4};
+						v = new Vector(d, 4);
+						listV2.add(v);
+						
+						d = new double[]{-2, 5, 0, 2};
+						v = new Vector(d, 4);
+						listV2.add(v);
+						
+						Matrix m1 = new Matrix(listV, 3),
+							   m2 = new Matrix(listV2, 4),
+							   m  = m1.times(m2);
+						
+						System.out.println();
+						m1.displayMatrix();
+						System.out.println("TIMES\n");
+						m2.displayMatrix();
+						System.out.println("=");
+						
+						if(m == null)
+							System.out.println("Size mismatched");
+						else m.displayMatrix();
+						break;
 				case 0:
 						List<Vector> list = new ArrayList<Vector>();
-						double arr[] = {4,7};
-						Vector v1 = new Vector(arr,2);
+						d = new double[]{4, 7};
+						Vector v1 = new Vector(d,2);
 						list.add(v1);
-						arr[0] = 2;
-						arr[1] = 6;
-						v1 = new Vector(arr,2);
+						
+						d = new double[]{2, 6};
+						v1 = new Vector(d,2);
 						list.add(v1);
 						Matrix matrix = new Matrix(list,2);
 						Vector ve = matrix.inverse().getVectors().get(0);
@@ -126,16 +166,14 @@ public class Driver {
 						break;
 				case 3: //GaussJordanElimination (with display vector)
 //					 gje([[1, 2, 2, 3], [2, 4, 4, 2], [5, 8, 10, 7], [7, 16, 14, 2]], 4, [0, 0, 0, 0]), 
-					double[] d = {0, 0};
+					d = new double[]{0, 0};
 					listV.add(new Vector(d, 2));
-					d[0] = 0;
-					d[1] = 0;
-					//d[3] = 1;
+
+					d = new double[]{0, 0};
 					listV.add(new Vector(d, 2));
 
 
-					d[0] = 1;
-					d[1] = 1;
+					d = new double[]{1, 1};
 					v = new Vector(d, 2);
 						v = Vector.Gauss_Jordan(listV, 2, v);
 						System.out.println();

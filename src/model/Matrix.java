@@ -26,7 +26,7 @@ public class Matrix {
 	
 	public Matrix(List<Vector> list, int vectorDimension) {
 		this.vectors = list;
-		this.dimension = list.size();
+		this.dimension = vectorDimension;
 	}
 	
 	public Matrix times(Matrix other) {
@@ -36,20 +36,33 @@ public class Matrix {
 		double elementData[] = new double[other.getDimension()];
 		Vector resultVector = new Vector(other.getDimension());
 		ArrayList<Vector> resultData = new ArrayList<Vector>();
-		
+
 		
 		/* If the sizes of the matrices mismatch */
-		if (dimension!=other.getVectors().get(0).getDimension()) {
+		if (dimension != other.vectors.size()) 
 			return null;
-		}
 		
-		for(int i = 0; i < other.getDimension(); i++) {
+		for(int i = 0; i < vectors.size(); i++)
+			resultData.add(new Vector(other.dimension));
+		
+			
+		for(int i = 0; i < vectors.size(); i++) {
+			for(int j = 0; j < other.dimension; j++){
+				
+				double val = 0;
+				
+				for(int k = 0; k < vectors.get(i).getDimension(); k++)
+					val += vectors.get(i).getSpecificData(k) * other.vectors.get(k).getSpecificData(j);
+				
+				resultData.get(i).setSpecificData(j, val);
+			}
 			
 		}
 		
 		/* The second parameter is the dimension of the vectors in the list */
 
-		Matrix result = new Matrix(resultData, other.getDimension());
+		Matrix result = new Matrix(resultData, other.dimension);
+		result.displayMatrix();
 		return result;
 	}
 	
