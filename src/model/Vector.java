@@ -135,11 +135,11 @@ public class Vector {
 	public static Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants) {
 		Vector result = null;
 		
-		double[] constantsArr = new double[dimension];
-		int[] firstNonZeroIndex = new int[dimension];
+		double[] constantsArr = new double[vectors.size()];
+		int[] firstNonZeroIndex = new int[vectors.size()];
 		double temp = 0;
 		
-		for(int i = 0; i < dimension; i++){
+		for(int i = 0; i < vectors.size(); i++){
 			constantsArr[i] = (i < constants.dimension ? constants.data[i] : 0);
 			firstNonZeroIndex[i] = Integer.MAX_VALUE;
 		}
@@ -156,7 +156,7 @@ public class Vector {
 				if(vectors.get(i).getSpecificData(j) != 0)
 					firstNonZeroIndex[i] = j;
 		}
-		for(int i = 1; i < dimension; i++)
+		for(int i = 1; i < vectors.size(); i++)
 			if(firstNonZeroIndex[i - 1] > firstNonZeroIndex[i]){
 				int tempIndex = firstNonZeroIndex[i];
 				firstNonZeroIndex[i] = firstNonZeroIndex[i - 1];

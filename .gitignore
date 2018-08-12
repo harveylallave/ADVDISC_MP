@@ -1,3 +1,5 @@
 
 *.class
 *.class
+bin/model/Vector.class
+bin/Driver.class
