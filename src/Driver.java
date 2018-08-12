@@ -126,33 +126,18 @@ public class Driver {
 						break;
 				case 3: //GaussJordanElimination (with display vector)
 //					 gje([[1, 2, 2, 3], [2, 4, 4, 2], [5, 8, 10, 7], [7, 16, 14, 2]], 4, [0, 0, 0, 0]), 
-					double[] d = {1, 2, 2, 3};
-					listV.add(new Vector(d, 4));
-					d[0] = 2;
-					d[1] = 4;
-					d[2] = 4;
-					d[3] = 2;
+					double[] d = {0, 0};
+					listV.add(new Vector(d, 2));
+					d[0] = 0;
+					d[1] = 0;
 					//d[3] = 1;
-					listV.add(new Vector(d, 4));
+					listV.add(new Vector(d, 2));
 
-					d[0] = 5;
-					d[1] = 8;
-					d[2] = 10;
-					d[3] = 7;
-					
-					//d[3] = 1;
-					listV.add(new Vector(d, 4));
 
-					d[0] = 7;
-					d[1] = 16;
-					d[2] = 14;
-					d[3] = 2;
-					
-					//d[3] = 1;
-					listV.add(new Vector(d, 4));
-					
-					v = new Vector(4);
-						v = Vector.Gauss_Jordan(listV, 4, v);
+					d[0] = 1;
+					d[1] = 1;
+					v = new Vector(d, 2);
+						v = Vector.Gauss_Jordan(listV, 2, v);
 						System.out.println();
 						if(v != null){
 							System.out.print("Values: ");

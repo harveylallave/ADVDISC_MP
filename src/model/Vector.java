@@ -134,11 +134,17 @@ public class Vector {
 	
 	public static Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants) {
 		Vector result = null;
+
+		// Add zero vector if needed
+		while(vectors.size() < dimension)
+			vectors.add(new Vector(dimension));
 		
 		double[] constantsArr = new double[vectors.size()];
 		int[] firstNonZeroIndex = new int[vectors.size()];
 		double temp = 0;
+		boolean changed = false;
 		
+		// Add 0 constant if needed
 		for(int i = 0; i < vectors.size(); i++){
 			constantsArr[i] = (i < constants.dimension ? constants.data[i] : 0);
 			firstNonZeroIndex[i] = Integer.MAX_VALUE;
@@ -146,9 +152,6 @@ public class Vector {
 		
 		displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
-		// Add zero vector and 0 constant if the size is not the same
-		while(vectors.size() < dimension)
-			vectors.add(new Vector(dimension));
 		
 		// Sort vectors based on the position of the first non zero element
 		for(int i = 0; i < vectors.size(); i++){
@@ -176,41 +179,87 @@ public class Vector {
 
 		displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
-		// Row Echelon Form (Lower/left half)
-		for(int i = 0; i < vectors.size(); i++)
-			for(int j = 0; j <= i; j++){
-				temp = vectors.get(i).getSpecificData(j);
-				if(temp != 0)
-					if(i == j){ // Make current value of index [i][j] == 1
-							vectors.get(i).scale(1/temp);
-							constantsArr[i] /= temp;
-					}
-					else if(j < i){	// Make current value == 0
-						constantsArr[i] += constantsArr[j] * -1 * temp;
-						vectors.get(i).add(vectors.get(j).scale(-1*temp));	
-						vectors.get(j).scale(-1/temp);
-					}
-			}
-	
-		displayAugmentedMatrix(vectors, dimension, constantsArr);
-		
-		// Reduced row echelon form (Upper/Right half)
-		for(int i = vectors.size() - 1; i >= 0 ; i--)
-			for(int j = dimension - 1; j > i; j--){
-				temp = vectors.get(i).getSpecificData(j);
-				if(temp != 0 && j > i){	// Make current value == 0
-					constantsArr[i] += constantsArr[j] * -1 * temp;
-					vectors.get(i).add(vectors.get(j).scale(-1 * temp));
-					vectors.get(j).scale(-1/temp);
+		do{
+			// Row Echelon Form (Lower/left half)
+			for(int i = 0; i < vectors.size(); i++)
+				for(int j = 0; j <= i && j < dimension; j++){
+					temp = vectors.get(i).getSpecificData(j);
+					if(temp != 0)
+						if(i == j){ // Make current value of index [i][j] == 1
+								vectors.get(i).scale(1/temp);
+								constantsArr[i] /= temp;
+						}
+						else if(j < i && vectors.get(j).getSpecificData(j) != 0){	// Make current value == 0
+							constantsArr[i] += constantsArr[j] * -1 * temp;
+							vectors.get(i).add(vectors.get(j).scale(-1*temp));	
+							vectors.get(j).scale(-1/temp);
+						}
 				}
-			}
-
-		displayAugmentedMatrix(vectors, dimension, constantsArr);
-
+		
+			displayAugmentedMatrix(vectors, dimension, constantsArr);
+	
+			
+	
+			
+				firstNonZeroIndex = new int[vectors.size()];
+				temp = 0;
+				changed = false;
+				
+				// Add 0 constant if needed
+				for(int i = 0; i < vectors.size(); i++){
+					firstNonZeroIndex[i] = Integer.MAX_VALUE;
+				}
+				
+				// Sort vectors based on the position of the first non zero element
+				for(int i = 0; i < vectors.size(); i++){
+					for(int j = 0; j < dimension && firstNonZeroIndex[i] == Integer.MAX_VALUE; j++)
+						if(vectors.get(i).getSpecificData(j) != 0)
+							firstNonZeroIndex[i] = j;
+				}
+				for(int i = 1; i < vectors.size(); i++)
+					if(firstNonZeroIndex[i - 1] > firstNonZeroIndex[i]){
+						changed = true;
+						int tempIndex = firstNonZeroIndex[i];
+						firstNonZeroIndex[i] = firstNonZeroIndex[i - 1];
+						firstNonZeroIndex[i - 1] = tempIndex;
+						
+						Vector tempVector = vectors.get(i);
+						vectors.remove(i);
+						vectors.add(i - 1, tempVector);
+						
+						temp = constantsArr[i];
+						constantsArr[i] = constantsArr[i - 1];
+						constantsArr[i - 1] = temp;
+						i = 0;
+					}
+				
+	
+				displayAugmentedMatrix(vectors, dimension, constantsArr);
+				
+		}while(changed);
+		
+		
 		boolean valid = true;
 		for(int i = vectors.size() - 1; i >= 0  && valid; i--)
 			valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
 		
+		if(valid){
+			// Reduced row echelon form (Upper/Right half)
+			for(int i = vectors.size() - 1; i >= 0 ; i--)
+				for(int j = dimension - 1; j > i; j--){
+					temp = vectors.get(i).getSpecificData(j);
+					if(temp != 0 && j > i){	// Make current value == 0
+						constantsArr[i] += constantsArr[j] * -1 * temp;
+						vectors.get(i).add(vectors.get(j).scale(-1 * temp));
+						vectors.get(j).scale(-1/temp);
+					}
+				}
+	
+			displayAugmentedMatrix(vectors, dimension, constantsArr);
+	
+			for(int i = vectors.size() - 1; i >= 0  && valid; i--)
+				valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
+		}			
 		if(valid){
 			
 			result = new Vector(dimension);
