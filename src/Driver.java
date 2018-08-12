@@ -140,7 +140,7 @@ public class Driver {
 						v = new Vector(d,2);
 						listV.add(v);
 						Matrix matrix = new Matrix(listV,2);
-						System.out.println("\nINVERSE OF THE MATRIX ");
+						System.out.println("\nTHE INVERSE OF THE MATRIX ");
 						matrix.displayMatrix();
 						System.out.println("IS");
 						matrix = matrix.inverse();

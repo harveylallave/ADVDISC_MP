@@ -10,9 +10,8 @@ public class Matrix {
 	
 	public Matrix(int dimension) {
 		vectors = new ArrayList<Vector>();
-		Vector vector = new Vector(dimension);
 		for(int i = 0; i < dimension; i++) {
-			vectors.add(vector);
+			vectors.add(new Vector(dimension));
 		}
 		this.dimension = dimension;
 		for(int i = 0; i < dimension; i++) {
@@ -70,7 +69,6 @@ public class Matrix {
 		
 		if(false) 			// Check if invertible
 			return null;
-		
 		return new Matrix(Vector.Gauss_Jordan(vectors, dimension, new Matrix(dimension).vectors),
 						  dimension);
 	}
