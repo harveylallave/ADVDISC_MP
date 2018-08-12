@@ -144,7 +144,7 @@ public class Vector {
 			firstNonZeroIndex[i] = Integer.MAX_VALUE;
 		}
 		
-		//displayAugmentedMatrix(vectors, dimension, constantsArr);
+		displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		// Add zero vector and 0 constant if the size is not the same
 		while(vectors.size() < dimension)
@@ -174,12 +174,11 @@ public class Vector {
 		
 			
 
-	//	displayAugmentedMatrix(vectors, dimension, constantsArr);
+		displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
-		boolean valid = validRowGaussJordan(vectors.get(0), constantsArr[0]);
 		// Row Echelon Form (Lower/left half)
-		for(int i = 0; i < vectors.size() && valid; i++)
-			for(int j = 0; j <= i && valid; j++){
+		for(int i = 0; i < vectors.size(); i++)
+			for(int j = 0; j <= i; j++){
 				temp = vectors.get(i).getSpecificData(j);
 				if(temp != 0)
 					if(i == j){ // Make current value of index [i][j] == 1
@@ -191,25 +190,26 @@ public class Vector {
 						vectors.get(i).add(vectors.get(j).scale(-1*temp));	
 						vectors.get(j).scale(-1/temp);
 					}
-				valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
 			}
 	
-
-	//	displayAugmentedMatrix(vectors, dimension, constantsArr);
+		displayAugmentedMatrix(vectors, dimension, constantsArr);
 		
 		// Reduced row echelon form (Upper/Right half)
-		for(int i = vectors.size() - 1; i >= 0  && valid; i--)
-			for(int j = dimension - 1; j > i && valid; j--){
+		for(int i = vectors.size() - 1; i >= 0 ; i--)
+			for(int j = dimension - 1; j > i; j--){
 				temp = vectors.get(i).getSpecificData(j);
 				if(temp != 0 && j > i){	// Make current value == 0
 					constantsArr[i] += constantsArr[j] * -1 * temp;
 					vectors.get(i).add(vectors.get(j).scale(-1 * temp));
 					vectors.get(j).scale(-1/temp);
 				}
-				valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
 			}
 
-		//displayAugmentedMatrix(vectors, dimension, constantsArr);
+		displayAugmentedMatrix(vectors, dimension, constantsArr);
+
+		boolean valid = true;
+		for(int i = vectors.size() - 1; i >= 0  && valid; i--)
+			valid = validRowGaussJordan(vectors.get(i), constantsArr[i]);
 		
 		if(valid){
 			
@@ -349,11 +349,11 @@ public class Vector {
 	private static boolean validRowGaussJordan(Vector vector, double d) {
 		// TODO Auto-generated method stub
 		boolean allZeroes = true;
-		for(int i = 0; i < vector.getDimension(); i++)
+		for(int i = 0; i < vector.getDimension() && allZeroes; i++)
 			if(vector.getSpecificData(i) != 0)
 				allZeroes = false;
 		
-		return d == 0 || !allZeroes; 
+		return d == 0 && allZeroes || d != 0 && !allZeroes; 
 	}
 
 
