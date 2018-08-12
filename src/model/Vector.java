@@ -64,6 +64,74 @@ public class Vector {
 		return null;
 	};
 	
+
+	public static double Gauss_Jordan_Determinant (List<Vector> vectors, int dimension, double x) {
+		Vector result = null;
+
+		int[] firstNonZeroIndex = new int[dimension];
+		double temp = 0;
+		
+		for(int i = 0; i < dimension; i++){
+			firstNonZeroIndex[i] = Integer.MAX_VALUE;
+		}
+		
+		// Add zero vector and 0 constant if the size is not the same
+		while(vectors.size() < dimension)
+			vectors.add(new Vector(dimension));
+		
+		// Sort vectors based on the position of the first non zero element
+		for(int i = 0; i < vectors.size(); i++){
+			for(int j = 0; j < dimension && firstNonZeroIndex[i] == Integer.MAX_VALUE; j++)
+				if(vectors.get(i).getSpecificData(j) != 0)
+					firstNonZeroIndex[i] = j;
+		}
+		for(int i = 1; i < dimension; i++)
+			if(firstNonZeroIndex[i - 1] > firstNonZeroIndex[i]){
+				int tempIndex = firstNonZeroIndex[i];
+				firstNonZeroIndex[i] = firstNonZeroIndex[i - 1];
+				firstNonZeroIndex[i - 1] = tempIndex;
+				
+				Vector tempVector = vectors.get(i);
+				vectors.remove(i);
+				vectors.add(i - 1, tempVector);
+				
+				x *= -1;
+				
+				i = 0;
+			}
+
+//		System.out.println(x);
+//		displayAugmentedMatrix(vectors, dimension, new double[]{0, 0});
+		
+		// Row Echelon Form (Lower/left half)
+		for(int i = 0; i < vectors.size(); i++)
+			for(int j = 0; j <= i; j++){
+				temp = vectors.get(i).getSpecificData(j);
+				if(temp != 0)
+					if(i == j){ // Make current value of index [i][j] == 1
+						vectors.get(i).scale(1/temp);
+						x /= temp;
+					}
+					else if(j < i){	// Make current value == 0
+						vectors.get(i).add(vectors.get(j).scale(-1*temp));	
+						vectors.get(j).scale(-1/temp);
+					}
+			}
+//		System.out.println(x);
+//		displayAugmentedMatrix(vectors, dimension, new double[]{0, 0});
+		
+		
+		boolean identityREF = true;
+		for(int i = 0; i < vectors.size() && identityREF; i++)
+			for(int j = 0; j <= i && identityREF; j++)
+				if(i == j && vectors.get(i).getSpecificData(j) != 1)
+					identityREF = false;
+				
+		x  = identityREF ?  1/x : 0/x;
+		return x;
+	}
+	
+	
 	public static Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants) {
 		Vector result = null;
 		

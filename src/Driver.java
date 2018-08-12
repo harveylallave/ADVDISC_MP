@@ -63,11 +63,13 @@ public class Driver {
 		Scanner sc = new Scanner(System.in);
 		Vector v, v2;
 		
-		int opt = -1;
+		int opt = -2;
 		
-		while (opt != 0){
+		while (opt != 7){
 			
-			System.out.print("\n\n0 - Matrix Inverse"				+
+			System.out.print("\n\n" + 
+							   "-1 - Matrix determinant\n" 		    +	
+							   "0 - Matrix Inverse"					+ 
 							   "1 - Vector Addition\n" 			    +	 
 							   "2 - Vector Scaling\n"    			+ 
 							   "3 - Gauss Jordan Elimination\n"     + 
@@ -79,24 +81,31 @@ public class Driver {
 			opt = sc.nextInt();
 			sc.nextLine();
 			switch(opt){
+				case -1: // Matrix Determinant
+						double d2[] = {1, 2};
+						v = new Vector(d2,2);
+						listV.add(v);
+						d2[0] = 3;
+						d2[1] = 4;
+						v = new Vector(d2,2);
+						listV.add(v);
+						System.out.println("Determinant: " + new Matrix(listV,2).determinant());
+						break;
 				case 0:
-					List<Vector> list = new ArrayList<Vector>();
-					double arr[] = {4,7};
-					Vector v1 = new Vector(arr,2);
-					list.add(v1);
-					arr[0] = 2;
-					arr[1] = 6;
-					v1 = new Vector(arr,2);
-					list.add(v1);
-					Matrix matrix = new Matrix(list,2);
-					Vector ve = matrix.inverse().getVectors().get(0);
-					System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));
-					ve = matrix.inverse().getVectors().get(1);
-					System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));
-					
-					
-				
-					break;
+						List<Vector> list = new ArrayList<Vector>();
+						double arr[] = {4,7};
+						Vector v1 = new Vector(arr,2);
+						list.add(v1);
+						arr[0] = 2;
+						arr[1] = 6;
+						v1 = new Vector(arr,2);
+						list.add(v1);
+						Matrix matrix = new Matrix(list,2);
+						Vector ve = matrix.inverse().getVectors().get(0);
+						System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));
+						ve = matrix.inverse().getVectors().get(1);
+						System.out.println(ve.getSpecificData(0) + " " + ve.getSpecificData(1));				
+						break;
 				case 1: //VectorAddition
 						// TODO: Multiple vector addition?
 						v = pickVector(listV);
@@ -116,6 +125,35 @@ public class Driver {
 						System.out.println("New value: " + v.toString());
 						break;
 				case 3: //GaussJordanElimination (with display vector)
+					double[] d = {0, 2};
+					listV.add(new Vector(d, 2));
+					d[0] = 0;
+					d[1] = 4;
+					//d[3] = 1;
+					listV.add(new Vector(d, 2));
+
+					d[0] = 0;
+					d[1] = 9;
+					//d[3] = 1;
+					listV.add(new Vector(d, 2));
+
+					d[0] = 0;
+					d[1] = 2;
+					//d[3] = 1;
+					listV.add(new Vector(d, 2));
+					d[0] = 2;
+					d[1] = 4;
+					v = new Vector(d, 2);
+						v = Vector.Gauss_Jordan(listV, 2, v);
+						System.out.println();
+						if(v != null){
+							System.out.print("Values: ");
+							for(double val : v.getData()){
+								System.out.print(val + " ");
+							}
+						} else System.out.println("No Solution");
+					break; 
+				/*case 3: //GaussJordanElimination (with display vector)
 						double[] d = {1, 1, -3};
 						listV.add(new Vector(d, 3));
 						d[0] = 2;
@@ -146,7 +184,7 @@ public class Driver {
 									System.out.print(val + " ");
 								}
 							} else System.out.println("No Solution");
-						break; 
+						break; */
 				case 4: newVector(listV);
 						break;
 				case 5: System.out.print("\nFile name: ");

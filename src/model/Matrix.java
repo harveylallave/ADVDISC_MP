@@ -64,6 +64,12 @@ public class Matrix {
 		return matrix;
 	}
 	
+	public double determinant(){
+		double x = 1;
+		
+		return Vector.Gauss_Jordan_Determinant(vectors, dimension, x);
+	}
+	
 	public List<Vector> getVectors() {
 		return vectors;
 	}
@@ -73,5 +79,15 @@ public class Matrix {
 	public int getDimension() {
 		return dimension;
 	}
-	
+
+	public void displayMatrix() {
+
+		for(int i = 0; i < vectors.size(); i++){
+			for(int j = 0; j < dimension; j++)
+				System.out.print(vectors.get(i).getSpecificData(j) + " ");
+			System.out.println();
+		}
+		System.out.println();
+		
+	}
 }
