@@ -67,7 +67,7 @@ public class Matrix {
 	
 	public Matrix inverse() {
 		
-		if(false) 			// Check if invertible
+		if(determinant() == 0) 
 			return null;
 		return new Matrix(Vector.Gauss_Jordan(vectors, dimension, new Matrix(dimension).vectors),
 						  dimension);
