@@ -139,7 +139,7 @@ public class Driver {
 						d = new double[]{2, 6};
 						v = new Vector(d,2);
 						listV.add(v);
-						Matrix matrix = new Matrix(listV,2);
+						Matrix matrix = new Matrix(listV, 2);
 						System.out.println("\nTHE INVERSE OF THE MATRIX ");
 						matrix.displayMatrix();
 						System.out.println("IS");

@@ -68,6 +68,12 @@ public class Vector {
 	public static double Gauss_Jordan_Determinant (List<Vector> vectors, int dimension, double x) {
 		Vector result = null;
 
+		List<Vector> tempVectors = new ArrayList<>();
+		for(int i = 0; i < vectors.size(); i++)
+			tempVectors.add(new Vector(vectors.get(i).data, vectors.get(i).dimension));
+		
+		vectors = tempVectors;
+		
 		// Add zero vector if needed
 		while(vectors.size() < dimension)
 			vectors.add(new Vector(dimension));
@@ -163,6 +169,12 @@ public class Vector {
 	public static Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants) {
 		Vector result = null;
 
+		List<Vector> tempVectors = new ArrayList<>();
+		for(int i = 0; i < vectors.size(); i++)
+			tempVectors.add(new Vector(vectors.get(i).data, vectors.get(i).dimension));
+		
+		vectors = tempVectors;
+		
 		// Add zero vector if needed
 		while(vectors.size() < dimension)
 			vectors.add(new Vector(dimension));
@@ -282,6 +294,12 @@ public class Vector {
 	public static List<Vector> Gauss_Jordan (List<Vector> vectors, int dimension, List<Vector> constants) {
 		List<Vector> result = null;
 
+		List<Vector> tempVectors = new ArrayList<>();
+		for(int i = 0; i < vectors.size(); i++)
+			tempVectors.add(new Vector(vectors.get(i).data, vectors.get(i).dimension));
+		
+		vectors = tempVectors;
+		
 		// Add zero vector if needed
 		while(vectors.size() < dimension)
 			vectors.add(new Vector(dimension));
@@ -327,6 +345,7 @@ public class Vector {
 					if(temp != 0)
 						if(i == j){ // Make current value of index [i][j] == 1
 								vectors.get(i).scale(1/temp);
+//								System.out.println("Changed " + temp +" | " + constants.get(i).getSpecificData(0));
 								constants.get(i).scale(1/temp);
 						}
 						else if(j < i && vectors.get(j).getSpecificData(j) != 0){	// Make current value == 0
