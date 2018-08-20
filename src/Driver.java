@@ -69,6 +69,7 @@ public class Driver {
 		while (opt != 7){
 			
 			System.out.print("\n\n" + 
+							   "-3 - Matrix Transpose\n" 		    +	
 							   "-2 - Matrix Determinant\n" 		    +	
 							   "-1 - Matrix Multiplication\n" 	    +	
 							   "0 - Matrix Inverse\n"				+ 
@@ -83,6 +84,21 @@ public class Driver {
 			opt = sc.nextInt();
 			sc.nextLine();
 			switch(opt){
+
+				case -3: // Matrix Transpose
+						d = new double[]{1, 2, 3};
+						v = new Vector(d,3);
+						listV.add(v);
+						
+						d = new double[]{3, 4, 5};
+						v = new Vector(d,3);
+						listV.add(v);
+						Matrix mT = new Matrix(listV,3);
+						mT.displayMatrix();
+						System.out.println("TRANSPOSE: ");
+						mT.transpose().displayMatrix();
+						break;
+			
 				case -2: // Matrix Determinant
 						d = new double[]{1, 2};
 						v = new Vector(d,2);

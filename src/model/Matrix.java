@@ -24,7 +24,10 @@ public class Matrix {
 	}
 	
 	public Matrix(List<Vector> list, int vectorDimension) {
-		this.vectors = list;
+		vectors = new ArrayList<Vector>();
+
+		for(int i = 0; i < list.size(); i++)
+			vectors.add(new Vector(list.get(i).getData(), list.get(i).getDimension()));
 		this.dimension = vectorDimension;
 	}
 	
@@ -103,5 +106,17 @@ public class Matrix {
 		}
 		System.out.println();
 		
+	}
+	
+	public Matrix transpose(){
+		Matrix m2 = new Matrix(vectors.size());
+		m2.vectors = new ArrayList<Vector>();
+		for(int i = 0; i < dimension; i++)
+			m2.vectors.add(new Vector(vectors.size()));
+		
+		for(int i = 0; i < vectors.size(); i++)
+			for(int j = 0; j < dimension; j++)
+				m2.vectors.get(j).setSpecificData(i, vectors.get(i).getSpecificData(j));
+		return m2;
 	}
 }
