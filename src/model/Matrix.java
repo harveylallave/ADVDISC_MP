@@ -77,7 +77,10 @@ public class Matrix {
 	
 	public double determinant(){
 		double x = 1;
-		
+	
+		if (vectors.size() != dimension)
+			return (Double) null;
+	
 		return Vector.Gauss_Jordan_Determinant(vectors, dimension, x);
 	}
 	
